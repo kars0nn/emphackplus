@@ -1,0 +1,15 @@
+[{
+	"modid"        : "emphack",
+	"name"         : "EmpHack+",
+	"description"  : "ez",
+	"version"      : "1.0",
+	"mcversion"    : "1.12.2-14.23.5.2772",
+	"url"          : "https://discord.gg/U5F6kvb",
+	"updateUrl"    : "https://discord.gg/U5F6kvb",
+	"authorList"   : ["kars0nn", "Krazzzzymonkey"],
+	"credits"      : "kars0nn",
+	"logoFile"     : "emphack.png",
+	"screenshots"  : [],
+	"dependencies" : []
+
+}]
