@@ -3,11 +3,14 @@ package me.travis.wurstplus.wurstplustwo.hacks.movement;
 import me.travis.wurstplus.wurstplustwo.guiscreen.settings.WurstplusSetting;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusCategory;
 import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
+import me.travis.wurstplus.wurstplustwo.util.WurstplusPlayerUtil;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class WurstplusStep extends WurstplusHack {
-    
+	WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+    int ticks = 0;
+	
     public WurstplusStep() {
         super(WurstplusCategory.WURSTPLUS_MOVEMENT);
 
@@ -17,6 +20,7 @@ public class WurstplusStep extends WurstplusHack {
     }
 
     WurstplusSetting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Reverse"));
+    WurstplusSetting timer = create("Use Timer", "Timer", true);
 
     @Override
     public void update() {
@@ -26,43 +30,38 @@ public class WurstplusStep extends WurstplusHack {
         if (mc.player.moveForward == 0 && mc.player.moveStrafing == 0) return;
 
         final double n = get_n_normal();
+        final boolean t = timer.get_value(true);
 
-        if (mode.in("Normal")) {
+        if(mode.in("Normal")) {
 
-            if (n < 0 || n > 2) return;
+            if (n < 0 || n > 2.5) return;
 
-            if (n == 2.0) {
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.42, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.78, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.63, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.51, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.9, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.21, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.45, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.43, mc.player.posZ, mc.player.onGround));
-                mc.player.setPosition(mc.player.posX, mc.player.posY + 2.0, mc.player.posZ);
+            if(ticks > 0) {
+            	ticks--;
+            } else {
+            	util.setTimer(1);
             }
-            if (n == 1.5) {
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.41999998688698, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.00133597911214, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.16610926093821, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.24918707874468, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.1707870772188, mc.player.posZ, mc.player.onGround));
-                mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
+            
+            if(n == 1) {
+            	util.step(1, new double[] { 0.42, 0.753 }, t, 0.6F);
+            	ticks = 1;
             }
-            if (n == 1.0) {
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.41999998688698, mc.player.posZ, mc.player.onGround));
-                mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
-                mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
+            if(n == 1.5) {
+            	util.step(1, new double[] { 0.42, 0.75, 1.0, 1.16, 1.23, 1.2 }, t, 0.35F);
+            	ticks = 1;
             }
-
+            if(n == 2.0) {
+            	util.step(2, new double[] { 0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43 }, t, 0.25F);
+            	ticks = 2;
+            }
+            if(n == 2.5) {
+            	util.step(2, new double[] { 0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.907 }, t, 0.15F);
+            	ticks = 2;
+            }
         }
 
-        if (mode.in("Reverse")) {
-
+        if(mode.in("Reverse")) {
             mc.player.motionY = -1;
-
         }
 
     }
@@ -89,6 +88,9 @@ public class WurstplusStep extends WurstplusHack {
 
     }
 
-    
-
+    @Override
+	public void disable() {
+		mc.timer.tickLength = 50F;
+		ticks = 0;
+	}
 }

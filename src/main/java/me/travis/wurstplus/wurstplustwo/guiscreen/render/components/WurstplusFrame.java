@@ -283,16 +283,18 @@ public class WurstplusFrame {
 
 		this.frame_name = this.category.get_name();
 		this.width_name = font.get_string_width(this.category.get_name());
+		
+		/* fixed a wp2 meme just by moving this before the drawshitz lmfao */
+		if (is_moving()) {
+			crush(mx, my);
+		}
 
 		WurstplusDraw.draw_rect(this.x, this.y, this.x + this.width, this.y + this.height, bg_r, bg_g, bg_b, bg_a);
 		int border_size = 1;
 		WurstplusDraw.draw_rect(this.x - 1, this.y, this.width + 1, this.height, bd_r, bd_g, bd_b, bd_a, border_size, "left-right");
 
-		WurstplusDraw.draw_string(this.frame_name, this.x + 4, this.y + 4, nc_r, nc_g, nc_b, nc_a);
-
-		if (is_moving()) {
-			crush(mx, my);
-		}
+		//WurstplusDraw.draw_string(this.frame_name, this.x + 4, this.y + 4, nc_r, nc_g, nc_b, nc_a);
+		WurstplusDraw.draw_string(this.frame_name, this.width / 2 - mc.fontRenderer.getStringWidth(this.frame_name) / 2 + this.x, this.y + 4, nc_r, nc_g, nc_b, nc_a);
 
 		for (WurstplusModuleButton buttons : this.module_button) {
 			buttons.set_x(this.x + 2);
