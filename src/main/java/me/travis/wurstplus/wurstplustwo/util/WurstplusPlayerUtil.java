@@ -39,13 +39,12 @@ public class WurstplusPlayerUtil {
         return FacingDirection.North;
     }
     
-    public double getMoveYaw(boolean flag) {
+    public double getMoveYaw() {
     	float strafe = 90 * mc.player.moveStrafing;
     	strafe *= mc.player.moveForward != 0 ? mc.player.moveForward * 0.5 : 1;
     	float yaw = mc.player.rotationYaw - strafe;
     	yaw -= mc.player.moveForward < 0 ? 180 : 0;
     	
-    	if(flag)return yaw; //meme
     	return Math.toRadians(yaw);
     }
     
@@ -54,13 +53,13 @@ public class WurstplusPlayerUtil {
     }
     
     public void setSpeed(Double speed) {
-    	Double yaw = getMoveYaw(false);
+    	Double yaw = getMoveYaw();
     	mc.player.motionX = -Math.sin(yaw) * speed;
     	mc.player.motionZ = Math.cos(yaw) * speed;
     }
     
-    public void addSpeed(Double speed, boolean flag) {
-    	Double yaw = getMoveYaw(flag);
+    public void addSpeed(Double speed) {
+    	Double yaw = getMoveYaw();
     	mc.player.motionX -= Math.sin(yaw) * speed;
     	mc.player.motionZ += Math.cos(yaw) * speed;
     }
@@ -69,11 +68,11 @@ public class WurstplusPlayerUtil {
     	mc.timer.tickLength = 50 / speed;
     }
     
-    public void step(double height, double[] offset, boolean flag, float speed) {
+    public void step(float height, double[] offset, boolean flag, float speed) {
     	for(int i = 0; i < offset.length; i++) {
     		 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + offset[i], mc.player.posZ, mc.player.onGround));
     	}
     	if(flag)setTimer(speed);
-    	mc.player.posY += height;
+    	mc.player.stepHeight = height;
     }
 }

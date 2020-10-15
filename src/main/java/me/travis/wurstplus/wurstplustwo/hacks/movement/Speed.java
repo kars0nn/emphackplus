@@ -32,7 +32,7 @@ public class Speed extends WurstplusHack {
 	
 	@Override
 	public void update() {
-		if(mc.player.isElytraFlying() || mc.player.isRiding() || mc.player.moveForward == 0 || mc.player.moveStrafing == 0)return;
+		if(mc.player.isElytraFlying() || mc.player.isRiding() || (mc.player.moveForward == 0 && mc.player.moveStrafing == 0))return;
 			
 		if(speed_mode.in("Strafe")) {
 			util.setSpeed(util.getSpeed());
@@ -42,14 +42,14 @@ public class Speed extends WurstplusHack {
 			
 			if(auto_jump.get_value(true) && mc.player.onGround && jumpTicks <= 0) {
 				mc.player.motionY = 0.41;
-				if(mc.player.isSprinting())util.addSpeed(0.2, false);
+				if(mc.player.isSprinting())util.addSpeed(0.2);
 				mc.player.isAirBorne = true;
 				jumpTicks = 5;
 			}
 		}
 		
 		if(speed_mode.in("OnGround") && mc.player.onGround) {
-			util.addSpeed(0.2, true);
+			util.addSpeed(0.2);
 			mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.4, mc.player.posZ, false));
 		}
 	}
