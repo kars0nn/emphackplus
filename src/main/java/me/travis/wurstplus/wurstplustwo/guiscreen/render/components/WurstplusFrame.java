@@ -34,7 +34,7 @@ public class WurstplusFrame {
 
 	private int move_x;
 	private int move_y;
-	
+
 	private boolean can;
 
 	private final Minecraft mc = Minecraft.getMinecraft();
@@ -256,7 +256,7 @@ public class WurstplusFrame {
 
 	public void render(int mx, int my) {
 		float[] tick_color = {
-			(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
+				(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
 		};
 
 		int color_a = Color.HSBtoRGB(tick_color[0], 1, 1);
@@ -284,6 +284,11 @@ public class WurstplusFrame {
 		this.frame_name = this.category.get_name();
 		this.width_name = font.get_string_width(this.category.get_name());
 		
+		/* fixed a wp2 meme just by moving this before the drawshitz lmfao */
+		if (is_moving()) {
+			crush(mx, my);
+		}
+
 		/* fixed a wp2 meme just by moving this before the drawshitz lmfao */
 		if (is_moving()) {
 			crush(mx, my);

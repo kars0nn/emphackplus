@@ -20,9 +20,10 @@ public class WurstplusMessageUtil {
 	public static ChatFormatting g = ChatFormatting.GOLD;
 	public static ChatFormatting b = ChatFormatting.BLUE;
 	public static ChatFormatting a = ChatFormatting.DARK_AQUA;
+	public static ChatFormatting y = ChatFormatting.DARK_RED;
 	public static ChatFormatting r = ChatFormatting.RESET;
 
-	public static String opener = g + Wurstplus.WURSTPLUS_NAME + ChatFormatting.GRAY + " > " + r;
+	public static String opener = y + Wurstplus.WURSTPLUS_NAME + ChatFormatting.GRAY + " > " + r;
 
 	public static void toggle_message(WurstplusHack module) {
 		if (module.is_active()) {
@@ -54,11 +55,11 @@ public class WurstplusMessageUtil {
 	}
 
 	public static void send_client_message_simple(String message) {
-		client_message(ChatFormatting.GOLD + Wurstplus.WURSTPLUS_NAME + " " + r + message);
+		client_message(ChatFormatting.LIGHT_PURPLE + Wurstplus.WURSTPLUS_NAME + " " + r + message);
 	}
 
 	public static void send_client_message(String message) {
-		client_message(ChatFormatting.GOLD + Wurstplus.WURSTPLUS_NAME + " " + r + message);
+		client_message(ChatFormatting.LIGHT_PURPLE + Wurstplus.WURSTPLUS_NAME + " " + r + message);
 	}
 
 	public static void send_client_error_message(String message) {

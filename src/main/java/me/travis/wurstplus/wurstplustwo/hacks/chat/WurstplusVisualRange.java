@@ -50,12 +50,13 @@ public class WurstplusVisualRange extends WurstplusHack {
 				if (!people.contains(name)) {
 					if (WurstplusFriendUtil.isFriend(name)) {
 						WurstplusMessageUtil.send_client_message("I see an epic dude named " + ChatFormatting.RESET + ChatFormatting.GREEN + name + ChatFormatting.RESET + " :D");
-					} else {
+					}
+					if (!WurstplusFriendUtil.isFriend(name)) {
 						WurstplusMessageUtil.send_client_message("I see a retard named " + ChatFormatting.RESET + ChatFormatting.RED + name + ChatFormatting.RESET + ". :cringe:");
-						if (Wurstplus.get_hack_manager().get_module_with_tag("DesktopNotifs").is_active()) {
-							DesktopNotifs.sendNotification(name + " entered visual range.", TrayIcon.MessageType.INFO);
-						}
 						people.add(name);
+					}
+					if (Wurstplus.get_hack_manager().get_module_with_tag("DesktopNotifs").is_active()) {
+						DesktopNotifs.sendNotification(name + " entered visual range.", TrayIcon.MessageType.INFO);
 					}
 				}
 			}

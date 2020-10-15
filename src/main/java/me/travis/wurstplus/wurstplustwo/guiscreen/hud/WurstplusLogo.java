@@ -11,7 +11,7 @@ public class WurstplusLogo extends WurstplusPinnable {
         super("Logo", "Logo", 1, 0, 0);
     }
 
-    ResourceLocation r = new ResourceLocation("resources/assets/minecraft/custom/empLOGO.png");
+    ResourceLocation r = new ResourceLocation("resources/assets/minecraft/custom/discordrpc2.png");
 
     @Override
 	public void render() {

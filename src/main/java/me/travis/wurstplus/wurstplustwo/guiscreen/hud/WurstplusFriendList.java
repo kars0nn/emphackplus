@@ -27,7 +27,7 @@ public class WurstplusFriendList extends WurstplusPinnable {
         
         passes = 0;
 
-        create_line(line1, this.docking(1, line1), 2, nl_r, nl_g, nl_b, nl_a);
+        create_line(line1, this.docking(2, line1), -2, nl_r, nl_g, nl_b, nl_a);
         
         if (!WurstplusOnlineFriends.getFriends().isEmpty()) {
             for (Entity e : WurstplusOnlineFriends.getFriends()) {
