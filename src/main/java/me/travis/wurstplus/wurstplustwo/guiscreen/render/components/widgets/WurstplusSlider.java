@@ -1,6 +1,8 @@
 package me.travis.wurstplus.wurstplustwo.guiscreen.render.components.widgets;
 
 
+import java.text.DecimalFormat;
+
 import me.travis.turok.values.TurokDouble;
 import me.travis.wurstplus.Wurstplus;
 import me.travis.wurstplus.wurstplustwo.guiscreen.render.WurstplusDraw;
@@ -190,7 +192,9 @@ public class WurstplusSlider extends WurstplusAbstractWidget {
 			}
 		}
 
-		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.get_value(this.double_)) : Integer.toString(this.setting.get_value(this.intenger));
+		//gay fix for gay problem
+		//String slider_value = !this.compare ? java.lang.Double.toString(this.setting.get_value(this.double_)) : Integer.toString(this.setting.get_value(this.intenger));
+		String slider_value = !this.compare ? new DecimalFormat("#.##").format(this.setting.get_value(this.double_)) : Integer.toString(this.setting.get_value(this.intenger));
 
 		WurstplusDraw.draw_rect(this.x, this.save_y, this.x + (this.width) * (this.setting.get_value(1) - this.setting.get_min(1)) / (this.setting.get_max(1) - this.setting.get_min(1)), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 

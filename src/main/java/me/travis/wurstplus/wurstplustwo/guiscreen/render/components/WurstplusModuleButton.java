@@ -197,7 +197,7 @@ public class WurstplusModuleButton {
 	}
 
 	public boolean motion(int mx, int my) {
-		if (mx >= get_x() && my >= get_save_y() && mx <= get_x() + get_width() && my <= get_save_y() + get_height()) {
+		if (mx >= get_x() && my >= get_save_y() - 2 && mx <= get_x() + get_width() && my <= get_save_y() + get_height() + 1) {
 			return true;
 		}
 
@@ -268,7 +268,8 @@ public class WurstplusModuleButton {
 		int bd_b = Wurstplus.click_gui.theme_widget_border_b;
 
 		if (this.module.is_active()) {
-			WurstplusDraw.draw_rect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+			//pog
+			WurstplusDraw.draw_rect(this.x, this.save_y - 2, this.x + this.width - separe, this.save_y + this.height + 1, bg_r, bg_g, bg_b, bg_a);
 
 			font.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
 		} else {

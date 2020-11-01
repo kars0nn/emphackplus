@@ -36,7 +36,7 @@ public class Speed extends WurstplusHack {
 			
 		if(speed_mode.in("Strafe")) {
 			util.setSpeed(util.getSpeed());
-			mc.player.jumpMovementFactor = 0.029F;
+			mc.player.speedInAir = 0.029F;
 			util.setTimer(1.09F);
 			if(jumpTicks > 0)jumpTicks--;
 			
@@ -56,7 +56,7 @@ public class Speed extends WurstplusHack {
 	
 	@Override
 	public void disable() {
-		mc.player.jumpMovementFactor = 0.02F;
+		mc.player.speedInAir = 0.02F;
 		util.setTimer(1);
 		jumpTicks = 0;
 	}

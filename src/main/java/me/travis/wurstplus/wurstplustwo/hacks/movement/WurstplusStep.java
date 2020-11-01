@@ -49,10 +49,6 @@ public class WurstplusStep extends WurstplusHack {
             	util.step(2, new double[] { 0.42, 0.78, 0.63, 0.51, 0.9, 1.21, 1.45, 1.43 }, t, 0.25F);
             	ticks = 2;
             }
-            if(n == 2.5) {
-            	util.step(2.5F, new double[] { 0.425, 0.821, 0.699, 0.599, 1.022, 1.372, 1.652, 1.869, 2.019, 1.907 }, t, 0.15F);
-            	ticks = 2;
-            }
         }
 
         if(mode.in("Reverse")) {

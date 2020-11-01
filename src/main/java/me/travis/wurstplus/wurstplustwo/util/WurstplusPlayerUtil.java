@@ -1,6 +1,7 @@
 package me.travis.wurstplus.wurstplustwo.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -58,6 +59,12 @@ public class WurstplusPlayerUtil {
     	mc.player.motionZ = Math.cos(yaw) * speed;
     }
     
+    public void setBoatSpeed(Double speed, Entity boat) {
+    	Double yaw = getMoveYaw();
+    	boat.motionX = -Math.sin(yaw) * speed;
+    	boat.motionZ = Math.cos(yaw) * speed;
+    }
+    
     public void addSpeed(Double speed) {
     	Double yaw = getMoveYaw();
     	mc.player.motionX -= Math.sin(yaw) * speed;
@@ -69,10 +76,10 @@ public class WurstplusPlayerUtil {
     }
     
     public void step(float height, double[] offset, boolean flag, float speed) {
+    	if(flag)setTimer(speed);
     	for(int i = 0; i < offset.length; i++) {
     		 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + offset[i], mc.player.posZ, mc.player.onGround));
     	}
-    	if(flag)setTimer(speed);
     	mc.player.stepHeight = height;
     }
 }
