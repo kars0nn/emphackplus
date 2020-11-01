@@ -1,6 +1,7 @@
 package me.travis.wurstplus;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
+import me.travis.wurstplus.Wurstplus;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;
@@ -18,7 +19,7 @@ public class EmpHackRPC {
         handlers.disconnected = ((var1, var2) -> System.out.println("Discord RPC disconnected, var1: " + String.valueOf(var1) + ", var2: " + var2));
         rpc.Discord_Initialize(ClientId, handlers, true, "");
         presence.startTimestamp = System.currentTimeMillis() / 1000L;
-        presence.details = "Version 1.0";
+        presence.details = "Version " + Wurstplus.WURSTPLUS_VERSION;
         presence.state = "Main Menu";
         presence.largeImageKey = "yes";
         presence.largeImageText = "cum on top";
@@ -30,7 +31,7 @@ public class EmpHackRPC {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     rpc.Discord_RunCallbacks();
-                    details = "Version 1.0";
+                    details = "Version " + Wurstplus.WURSTPLUS_VERSION;
                     state = "";
                     if (mc.isIntegratedServerRunning()) {
                         state = "Playing Singleplayer";

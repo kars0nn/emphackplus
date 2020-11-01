@@ -49,7 +49,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusCriticals());
 		add_hack(new WurstplusKillAura());
 		add_hack(new WurstplusSurround());
-		add_hack(new WurstplusVelocity());
+		//add_hack(new WurstplusVelocity());
 		add_hack(new WurstplusAutoCrystal());
 		add_hack(new WurstplusHoleFill());
 		add_hack(new WurstplusTrap());
@@ -82,6 +82,8 @@ public class WurstplusModuleManager {
 		add_hack(new PingBypass());
 
 		// Movement.
+		add_hack(new FastSwim());
+		add_hack(new BoatFly());
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
 		add_hack(new WurstPlusAnchor());
