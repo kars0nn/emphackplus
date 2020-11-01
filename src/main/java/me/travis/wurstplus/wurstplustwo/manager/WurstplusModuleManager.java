@@ -78,6 +78,7 @@ public class WurstplusModuleManager {
 		add_hack(new popbobsexdupe());
 
 		// Movement.
+		add_hack(new FastSwim());
 		add_hack(new BoatFly());
 		add_hack(new Speed());
 		add_hack(new WurstplusStep());
