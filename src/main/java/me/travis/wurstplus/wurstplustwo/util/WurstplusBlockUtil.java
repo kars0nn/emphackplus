@@ -8,14 +8,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketEntityAction.Action;
+import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayer.Rotation;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -174,5 +172,40 @@ public class WurstplusBlockUtil {
         float pitch = (float) (-Math.toDegrees(Math.atan2(diffY, diffXZ)));
 
         mc.player.connection.sendPacket(new Rotation(yaw, pitch, mc.player.onGround));
+    }
+
+    private static float[] getNeededRotations2(Vec3d vec)
+    {
+        Vec3d eyesPos = getEyesPos();
+
+        double diffX = vec.x - eyesPos.x;
+        double diffY = vec.y - eyesPos.y;
+        double diffZ = vec.z - eyesPos.z;
+
+        double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
+
+        float yaw = (float)Math.toDegrees(Math.atan2(diffZ, diffX)) - 90F;
+        float pitch = (float)-Math.toDegrees(Math.atan2(diffY, diffXZ));
+
+        return new float[]{
+                mc.player.rotationYaw
+                        + MathHelper.wrapDegrees(yaw - mc.player.rotationYaw),
+                mc.player.rotationPitch + MathHelper
+                        .wrapDegrees(pitch - mc.player.rotationPitch)};
+    }
+
+    public static Vec3d getEyesPos()
+    {
+        return new Vec3d(mc.player.posX,
+                mc.player.posY + mc.player.getEyeHeight(),
+                mc.player.posZ);
+    }
+
+    public static void faceVectorPacketInstant(Vec3d vec)
+    {
+        float[] rotations = getNeededRotations2(vec);
+
+        mc.player.connection.sendPacket(new CPacketPlayer.Rotation(rotations[0],
+                rotations[1], mc.player.onGround));
     }
 }

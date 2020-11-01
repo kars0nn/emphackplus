@@ -1,7 +1,6 @@
 package me.travis.wurstplus;
 
 import club.minnced.discord.rpc.DiscordEventHandlers;
-import me.travis.wurstplus.Wurstplus;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import net.minecraft.client.Minecraft;

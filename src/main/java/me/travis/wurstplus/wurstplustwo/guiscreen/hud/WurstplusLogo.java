@@ -18,11 +18,11 @@ public class WurstplusLogo extends WurstplusPinnable {
 
 		GL11.glPushMatrix();
         GL11.glTranslatef(this.get_x(), this.get_y(), 0.0F);
-        WurstplusTextureHelper.drawTexture(r, this.get_x(), this.get_y(), 100, 25);
+        WurstplusTextureHelper.drawTexture(r, this.get_x(), this.get_y(), 100, 27);
         GL11.glPopMatrix();
 
 		this.set_width(100);
-		this.set_height(25);
+		this.set_height(27);
 	}
 
 

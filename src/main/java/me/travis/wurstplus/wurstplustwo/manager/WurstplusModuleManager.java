@@ -43,6 +43,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAnnouncer());
 		add_hack(new DesktopNotifs());
 		add_hack(new ChatEncryption());
+		add_hack(new AutoExcuse());
 
 		// Combat.
 		add_hack(new WurstplusCriticals());
@@ -76,14 +77,16 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusCoordExploit());
 		add_hack(new WurstplusNoHandshake());
 		add_hack(new popbobsexdupe());
+		add_hack(new NoSandRender());
+		add_hack(new NoSkylightUpdate());
 
 		// Movement.
-		add_hack(new WurstplusStrafe());
 		add_hack(new WurstplusStep());
 		add_hack(new WurstplusSprint());
 		add_hack(new WurstPlusAnchor());
 		add_hack(new Velocity());
 		add_hack(new IceSpeed());
+		add_hack(new Speed());
 		
 		// Render.
 		add_hack(new WurstplusHighlight());
@@ -101,6 +104,7 @@ public class WurstplusModuleManager {
 		add_hack(new WurstplusAlwaysNight());
 		add_hack(new WurstplusCityEsp());
 		add_hack(new Glowesp());
+		add_hack(new SkyColor());
 
 		// Misc.
 		add_hack(new WurstplusMiddleClickFriends());

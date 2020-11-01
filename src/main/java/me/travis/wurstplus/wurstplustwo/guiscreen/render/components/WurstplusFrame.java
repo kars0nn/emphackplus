@@ -84,7 +84,7 @@ public class WurstplusFrame {
 
 	public void refresh_frame(WurstplusModuleButton button, int combo_height) {
 
-		this.height = 25;
+		this.height = 27;
 
 		int size  = Wurstplus.get_hack_manager().get_modules_with_category(this.category).size();
 		int count = 0;

@@ -13,6 +13,7 @@ import me.travis.wurstplus.wurstplustwo.hacks.chat.WurstplusAutoEz;
 import me.travis.wurstplus.wurstplustwo.util.*;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
+import me.travis.wurstplus.wurstplustwo.guiscreen.render.components.widgets.WurstplusSlider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -69,10 +70,13 @@ public class WurstplusAutoCrystal extends WurstplusHack {
 
     WurstplusSetting auto_switch = create("Auto Switch", "CaAutoSwitch", true);
     WurstplusSetting anti_suicide = create("Anti Suicide", "CaAntiSuicide", true);
+    WurstplusSetting render_damage = create("Render Damage", "RenderDamage", true);
 
     WurstplusSetting fast_mode = create("Fast Mode", "CaSpeed", true);
     WurstplusSetting client_side = create("Client Side", "CaClientSide", false);
     WurstplusSetting jumpy_mode = create("Jumpy Mode", "CaJumpyMode", false);
+    WurstplusSetting attempt_chain = create("Chain Mode", "CaChainMode", false);
+    WurstplusSetting chain_length = create("Chain Length", "CaChainLength", 3, 1, 6);
 
     WurstplusSetting anti_stuck = create("Anti Stuck", "CaAntiStuck", false);
     WurstplusSetting endcrystal = create("1.13 Mode", "CaThirteen", false);
@@ -101,11 +105,6 @@ public class WurstplusAutoCrystal extends WurstplusHack {
     WurstplusSetting sat = create("Satiation", "CaSatiation", 0.8, 0, 1);
     WurstplusSetting brightness = create("Brightness", "CaBrightness", 0.8, 0, 1);
     WurstplusSetting height = create("Height", "CaHeight", 1.0, 0.0, 1.0);
-
-    WurstplusSetting render_damage = create("Render Damage", "RenderDamage", true);
-
-    // WurstplusSetting attempt_chain = create("Chain Mode", "CaChainMode", false);
-    WurstplusSetting chain_length = create("Chain Length", "CaChainLength", 3, 1, 6);
 
     private final ConcurrentHashMap<EntityEnderCrystal, Integer> attacked_crystals = new ConcurrentHashMap<>();
 
@@ -408,10 +407,10 @@ public class WurstplusAutoCrystal extends WurstplusHack {
 
                 if (self_damage > maximum_damage_self || (anti_suicide.get_value(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
 
-                /** if (attempt_chain.get_value(true) && chain_step > 0) {
+                if (attempt_chain.get_value(true) && chain_step > 0) {
                     damage_blocks.add(new WurstplusPair<>(best_damage, best_block));
                     autoez_target = target;
-                } else**/ if (target_damage > best_damage) {
+                } else if (target_damage > best_damage) {
                     best_damage = target_damage;
                     best_block = block;
                     autoez_target = target;
@@ -434,17 +433,17 @@ public class WurstplusAutoCrystal extends WurstplusHack {
 
         damage_blocks = sort_best_blocks(damage_blocks);
 
-        //if (!attempt_chain.get_value(true)) {
+        if (!attempt_chain.get_value(true)) {
             return best_block;
-//        } else {
-//            if (damage_blocks.size() == 0) {
-//                return null;
-//            }
-//            if (damage_blocks.size() < current_chain_index) {
-//                return damage_blocks.get(0).getValue();
-//            }
-//            return damage_blocks.get(current_chain_index).getValue();
-//        }
+        } else {
+            if (damage_blocks.size() == 0) {
+                return null;
+            }
+            if (damage_blocks.size() < current_chain_index) {
+                return damage_blocks.get(0).getValue();
+            }
+            return damage_blocks.get(current_chain_index).getValue();
+        }
 
     }
 

@@ -57,7 +57,7 @@ public class WurstplusFuckedDetector extends WurstplusHack {
         for (EntityPlayer player : mc.world.playerEntities) {
 
             if (!WurstplusEntityUtil.isLiving(player) || player.getHealth() <= 0) continue;
-            // if (!player.onGround) continue;
+            if (!player.onGround) continue;
 
             if (is_fucked(player)) {
 
