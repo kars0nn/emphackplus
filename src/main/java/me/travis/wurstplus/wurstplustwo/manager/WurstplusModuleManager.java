@@ -79,6 +79,7 @@ public class WurstplusModuleManager {
 		add_hack(new popbobsexdupe());
 		add_hack(new NoSandRender());
 		add_hack(new NoSkylightUpdate());
+		add_hack(new PingBypass());
 
 		// Movement.
 		add_hack(new WurstplusStep());
