@@ -32,10 +32,8 @@ public class BoatFly extends WurstplusHack {
 
 	WurstplusSetting hSpeed = create("HSpeed", "HSpeed", 1F, 0.1F, 10F);
 	WurstplusSetting vSpeed = create("VSpeed", "VSpeed", 1F, 0.1F, 10F);
-	WurstplusSetting gSpeed = create("GSpeed", "GSpeed", 0.1F, 0F, 1F);
 	WurstplusSetting tickDelay = create("TickDelay", "TickDelay", 1, 0, 20);
 	WurstplusSetting fixYaw = create("FixYaw", "FixYaw", true);
-	WurstplusSetting gravity = create("Gravity", "Gravity", true);
 	WurstplusSetting bypass = create("Bypass", "Bypass", false);
 	
 	@EventHandler
@@ -66,15 +64,12 @@ public class BoatFly extends WurstplusHack {
 		if(mc.player == null || !mc.player.isRiding())return;
 		
 		Entity e = mc.player.getRidingEntity();
+		e.setNoGravity(true);
 		
 		if(fixYaw.get_value(true))e.rotationYaw = mc.player.rotationYaw;
-		e.setNoGravity(!gravity.get_value(true));
 		
 		if(mc.player.movementInput.moveForward != 0 || mc.player.movementInput.moveStrafe != 0)util.setBoatSpeed(hSpeed.get_value(1D), e);
-		e.motionY = mc.player.movementInput.sneak ? -vSpeed.get_value(1F) :
-		mc.player.ticksExisted % 2 != 0 ? -gSpeed.get_value(1F) / 10 :
-		mc.player.movementInput.jump ? vSpeed.get_value(1F) :
-		gSpeed.get_value(1F) / 10;
+		e.motionY = mc.player.movementInput.sneak ? -vSpeed.get_value(1F) : mc.player.ticksExisted % 2 != 0 ? -0.04 : mc.player.movementInput.jump ? vSpeed.get_value(1F) : 0.04;
 		
 		event.cancel();
 	});
