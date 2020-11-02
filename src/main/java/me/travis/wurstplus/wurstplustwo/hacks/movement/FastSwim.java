@@ -6,7 +6,7 @@ import me.travis.wurstplus.wurstplustwo.hacks.WurstplusHack;
 import me.travis.wurstplus.wurstplustwo.util.WurstplusPlayerUtil;
 
 public class FastSwim extends WurstplusHack {
-	WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+	private WurstplusPlayerUtil util = new WurstplusPlayerUtil();
 	private int divider = 5;
 	
 	public FastSwim() {

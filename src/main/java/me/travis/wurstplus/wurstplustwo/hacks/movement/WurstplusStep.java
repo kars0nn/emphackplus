@@ -7,8 +7,8 @@ import me.travis.wurstplus.wurstplustwo.util.WurstplusPlayerUtil;
 import net.minecraft.util.math.AxisAlignedBB;
 
 public class WurstplusStep extends WurstplusHack {
-	WurstplusPlayerUtil util = new WurstplusPlayerUtil();
-    int ticks = 0;
+	private WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+	private int ticks = 0;
 	
     public WurstplusStep() {
         super(WurstplusCategory.WURSTPLUS_MOVEMENT);

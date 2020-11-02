@@ -19,7 +19,8 @@ import net.minecraft.network.play.server.SPacketPlayerPosLook;
 import net.minecraft.util.EnumHand;
 
 public class BoatFly extends WurstplusHack {
-	WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+	private WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+	private int ticks;
 	
 	public BoatFly() {
 		super(WurstplusCategory.WURSTPLUS_MOVEMENT);
@@ -29,44 +30,52 @@ public class BoatFly extends WurstplusHack {
 		description = "fly with entities";
 	}
 
-	WurstplusSetting speed = create("Speed", "Speed", 1F, 0.1F, 10F);
-	WurstplusSetting verticalSpeed = create("VerticalSpeed", "VerticalSpeed", 1F, 0.1F, 10F);
-	WurstplusSetting glideSpeed = create("GlideSpeed", "GlideSpeed", 1F, 0F, 10F);
+	WurstplusSetting hSpeed = create("HSpeed", "HSpeed", 1F, 0.1F, 10F);
+	WurstplusSetting vSpeed = create("VSpeed", "VSpeed", 1F, 0.1F, 10F);
+	WurstplusSetting gSpeed = create("GSpeed", "GSpeed", 0.1F, 0F, 1F);
+	WurstplusSetting tickDelay = create("TickDelay", "TickDelay", 1, 0, 20);
 	WurstplusSetting fixYaw = create("FixYaw", "FixYaw", true);
 	WurstplusSetting gravity = create("Gravity", "Gravity", true);
 	WurstplusSetting bypass = create("Bypass", "Bypass", false);
 	
 	@EventHandler
 	private Listener<SendPacket> onSendPacket = new Listener<>(event -> {
-		if(mc.player == null)return; //gay crash fix
-		if(!mc.player.isRiding() || !bypass.get_value(true))return;
+		if(mc.player == null || !mc.player.isRiding() || !bypass.get_value(true))return;
+		
 		if(event.get_packet() instanceof CPacketVehicleMove) {
-			if(mc.player.ticksExisted % 2 == 0) {
+			if(ticks++ >= tickDelay.get_value(1) + 1) {
 				mc.player.connection.sendPacket(new CPacketUseEntity(mc.player.getRidingEntity(), EnumHand.MAIN_HAND));
+				ticks = 0;
 				return;
 			}
 		}
+		
 		if(event.get_packet() instanceof CPacketPlayer.Rotation || event.get_packet() instanceof CPacketInput)event.cancel();
 	});
 	
 	@EventHandler
 	private Listener<ReceivePacket> onReceivePacket = new Listener<>(event -> {
-		if(mc.player == null)return; //gay crash fix
-		if(!mc.player.isRiding() || !bypass.get_value(true))return;
+		if(mc.player == null || !mc.player.isRiding() || !bypass.get_value(true))return;
+		
+		/* cancelling SPacketPlayerPosLook fixes camera glitching */
 		if(event.get_packet() instanceof SPacketMoveVehicle || event.get_packet() instanceof SPacketPlayerPosLook)event.cancel();
 	});
 	
 	@EventHandler
 	private Listener<WurstplusEventPlayerTravel> onTravel = new Listener<>(event -> {
-		if(mc.player == null)return; //gay crash fix
-		if(!mc.player.isRiding())return;
-		Entity riding = mc.player.getRidingEntity();
-		if(fixYaw.get_value(true))riding.rotationYaw = mc.player.rotationYaw;
-		riding.setNoGravity(!gravity.get_value(true));
-		riding.motionY = -glideSpeed.get_value(1F) / 5000;
-		if(mc.player.movementInput.moveForward != 0 || mc.player.movementInput.moveStrafe != 0)util.setBoatSpeed(speed.get_value(1D), riding);
-		if(mc.player.movementInput.jump)riding.motionY = verticalSpeed.get_value(1F);
-		if(mc.player.movementInput.sneak)riding.motionY = -verticalSpeed.get_value(1F);
+		if(mc.player == null || !mc.player.isRiding())return;
+		
+		Entity e = mc.player.getRidingEntity();
+		
+		if(fixYaw.get_value(true))e.rotationYaw = mc.player.rotationYaw;
+		e.setNoGravity(!gravity.get_value(true));
+		
+		if(mc.player.movementInput.moveForward != 0 || mc.player.movementInput.moveStrafe != 0)util.setBoatSpeed(hSpeed.get_value(1D), e);
+		e.motionY = mc.player.movementInput.sneak ? -vSpeed.get_value(1F) :
+		mc.player.ticksExisted % 2 != 0 ? -gSpeed.get_value(1F) / 10 :
+		mc.player.movementInput.jump ? vSpeed.get_value(1F) :
+		gSpeed.get_value(1F) / 10;
+		
 		event.cancel();
 	});
 }

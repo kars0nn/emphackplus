@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.CPacketPlayer;
 
 
 public class Speed extends WurstplusHack {
-	WurstplusPlayerUtil util = new WurstplusPlayerUtil();
+	private WurstplusPlayerUtil util = new WurstplusPlayerUtil();
 	private int jumpTicks = 0;
 
 	public Speed() {
